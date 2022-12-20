@@ -142,7 +142,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock("%d/%m/%Y - %H:%M:%S")
+mytextclock = wibox.widget.textclock("%d/%m/%Y - %H:%M")
 
 -- Create a wibox for each screen and add it
 -- Buttons:
