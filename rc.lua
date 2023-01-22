@@ -104,7 +104,7 @@ battery_widget = awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 1
     local remaining_time = ""
     if ( data["POWER_SUPPLY_STATUS"] == "Charging" ) then
         is_charging = "+"
-        remaining_time = 0/0
+        remaining_time = ""
         -- remaining_time = (tonumber(data["POWER_SUPPLY_ENERGY_FULL"]) - tonumber(data["POWER_SUPPLY_POWER_NOW"])) / tonumber(data["POWER_SUPPLY_POWER_NOW"])
     else
         local time = tonumber(data["POWER_SUPPLY_ENERGY_NOW"])
