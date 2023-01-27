@@ -328,7 +328,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
     {description = "open a terminal", group = "launcher"}),
     -- Prompt
-    awful.key({ modkey },            "d",     function () awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey },            "d",     function () awful.spawn("rofi -show drun") end,
     {description = "run prompt", group = "launcher"}),
 
     -- Group layout
