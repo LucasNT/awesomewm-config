@@ -118,6 +118,10 @@ end)
 
 volume_porcent = wibox.widget.textbox("", true)
 
+music_playing = awful.widget.watch("playerctl metadata title", 1, function(widget, stdout)
+    widget:set_text( " | " .. stdout)
+end)
+
 local update_volume = function ( stdout, stderr, exitreason, exitcode )
     if ( exitcode == 0 ) then
         volume_porcent:set_text(stdout)
@@ -232,7 +236,8 @@ awful.screen.connect_for_each_screen(function(s)
             battery_widget,
             {
                 layout = wibox.layout.fixed.horizontal,
-                volume_porcent
+                volume_porcent,
+                music_playing
             }
         },
         -- s.mytasklist, -- Middle widget
