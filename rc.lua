@@ -83,11 +83,15 @@ myawesomemenu = {
     { "quit", function() awesome.quit() end },
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-{ "open terminal", terminal } } })
+mymainmenu = awful.menu(
+    { 
+        items = {
+            { "open terminal", terminal } 
+        }
+    }
+)
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-menu = mymainmenu })
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
 
 
 -- battery widget
@@ -119,7 +123,7 @@ end)
 volume_porcent = wibox.widget.textbox("", true)
 
 music_playing = awful.widget.watch("playerctl metadata title", 1, function(widget, stdout)
-    widget:set_text( " | " .. stdout)
+    widget:set_text( " | " .. stdout:sub(1,20))
 end)
 
 local update_volume = function ( stdout, stderr, exitreason, exitcode )
@@ -155,24 +159,6 @@ mytextclock = wibox.widget.textclock("%d/%m/%Y - %H:%M")
 -- 	3 right click
 -- 	4 wheel up
 -- 	5 wheel down
-local taglist_buttons = gears.table.join(
-awful.button({ }, 1, function(t) t:view_only() end),
-awful.button({ modkey }, 1, function(t)
-    if client.focus then
-        client.focus:move_to_tag(t)
-    end
-end),
-awful.button({ }, 3, awful.tag.viewtoggle),
-awful.button({ modkey }, 3, function(t)
-    if client.focus then
-        client.focus:toggle_tag(t)
-    end
-end)
--- awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
--- awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
-
-local tasklist_buttons = {}
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -208,18 +194,17 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
     }
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "bottom", screen = s })
+    s.mywibox = awful.wibar({ position = s.outputs.eDP1 == nil and "top" or "bottom", screen = s })
+
 
     -- Add widgets to the wibox
     s.mywibox:setup {
