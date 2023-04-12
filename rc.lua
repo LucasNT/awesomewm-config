@@ -110,14 +110,18 @@ battery_widget = awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 1
         is_charging = "+"
         remaining_time = ""
         -- remaining_time = (tonumber(data["POWER_SUPPLY_ENERGY_FULL"]) - tonumber(data["POWER_SUPPLY_POWER_NOW"])) / tonumber(data["POWER_SUPPLY_POWER_NOW"])
+    elseif ( data["POWER_SUPPLY_STATUS"] == "Full" ) then
+        is_charging = "="
+        remaining_time = ""
     else
+        is_charging = "-"
         local time = tonumber(data["POWER_SUPPLY_ENERGY_NOW"])
         / tonumber(data["POWER_SUPPLY_POWER_NOW"])
         remaining_time = string.format( "%.0fh:%.0fm", math.floor(time) , (time - math.floor(time)) * 60)
     end
     local capacity =  tonumber(data["POWER_SUPPLY_ENERGY_NOW"])
     / tonumber(data["POWER_SUPPLY_ENERGY_FULL_DESIGN"]) * 100
-    widget:set_text(string.format("%.1f%%%s %d %s", capacity, is_charging, data["POWER_SUPPLY_CYCLE_COUNT"], remaining_time ))
+    widget:set_text(string.format("%s%.1f%% %d %s", is_charging, capacity, data["POWER_SUPPLY_CYCLE_COUNT"], remaining_time ))
 end)
 
 volume_porcent = wibox.widget.textbox("", true)
