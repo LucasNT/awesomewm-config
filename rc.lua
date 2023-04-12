@@ -235,6 +235,9 @@ awful.screen.connect_for_each_screen(function(s)
             s.mylayoutbox,
         },
     }
+    if( s.outputs.eDP1 == nil) then
+        s.padding = { bottom=15 }
+    end
 end)
 -- }}}
 
