@@ -208,7 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
         end
         set_wallpaper(s)
 
-        awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "q", "w", "e", "r" }, s, awful.layout.layouts[1])
+        awful.tag({ "1", "2", "3", "4", "q", "w", "e", "r", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
         s.mylayoutbox = awful.widget.layoutbox(s)
 
         s.mytaglist = awful.widget.taglist {
@@ -520,15 +520,15 @@ globalkeys = gears.table.join(
     create_keys_for_tags('2',2),
     create_keys_for_tags('3',3),
     create_keys_for_tags('4',4),
-    create_keys_for_tags('5',5),
-    create_keys_for_tags('6',6),
-    create_keys_for_tags('7',7),
-    create_keys_for_tags('8',8),
-    create_keys_for_tags('9',9),
-    create_keys_for_tags('q',10),
-    create_keys_for_tags('w',11),
-    create_keys_for_tags('e',12),
-    create_keys_for_tags('r',13)
+    create_keys_for_tags('q',5),
+    create_keys_for_tags('w',6),
+    create_keys_for_tags('e',7),
+    create_keys_for_tags('r',8),
+    create_keys_for_tags('5',9),
+    create_keys_for_tags('6',10),
+    create_keys_for_tags('7',11),
+    create_keys_for_tags('8',12),
+    create_keys_for_tags('9',13)
 )
 
 -- Set keys
