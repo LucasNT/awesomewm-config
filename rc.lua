@@ -538,7 +538,7 @@ root.keys(globalkeys)
 
 -- Rules
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
     awful.button({ }, 1,
         function (c)
             c:emit_signal("request::activate", "mouse_click", {raise = true})
@@ -557,6 +557,42 @@ clientbuttons = gears.table.join(
         end
     )
 )
+
+local  clientkeys = gears.table.join(
+    awful.key({ Modkey, "Shift"   }, "c",
+        function (c)
+            c:kill()
+        end,
+        {description = "close", group = "client"}
+    ),
+    awful.key({ Modkey, "Control" }, "Return",
+        function (c)
+            c:swap(awful.client.getmaster())
+        end,
+        {description = "move to master", group = "client"}
+    ),
+    awful.key({ Modkey,           }, "o",
+        function (c)
+            c:move_to_screen()
+        end,
+        {description = "move to screen", group = "client"}
+    ),
+    awful.key({ Modkey,           }, "t",
+        function (c)
+            c.ontop = not c.ontop
+        end,
+        {description = "toggle keep on top", group = "client"}
+    ),
+    awful.key({ Modkey,           }, "n",
+        function (c)
+            -- The client currently has the input focus, so it cannot be
+            -- minimized, since minimized clients can't have the focus.
+            c.minimized = true
+        end ,
+        {description = "minimize", group = "client"}
+    )
+)
+
 
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
