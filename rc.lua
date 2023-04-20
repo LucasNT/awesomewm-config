@@ -251,6 +251,7 @@ awful.screen.connect_for_each_screen(function(s)
 
         awful.tag({ "1", "2", "3", "4", "q", "w", "e", "r" }, s, awful.layout.layouts[1])
         s.mylayoutbox = awful.widget.layoutbox(s)
+        s.padding = { bottom=60 }
 
         s.mytaglist = awful.widget.taglist {
             screen  = s,
