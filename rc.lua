@@ -138,7 +138,7 @@ local taglist_buttons = gears.table.join(
 
 menubar.utils.terminal = Terminal -- Set the Terminal for applications that require it
 
--- Widgest
+-- Widget
 
 local battery_widget = awful.widget.watch("cat /sys/class/power_supply/BAT0/uevent", 10 , function (widget, stdout)
     local data = {}
@@ -175,7 +175,8 @@ local music_playing = awful.widget.watch("playerctl metadata title", 1, function
     widget:set_text( " | " .. stdout:sub(1,Music_lenght))
 end)
 
-local update_volume = function ( stdout, stderr, exitreason, exitcode )
+-- function ( stdout, stderr, exitreason, exitcode )
+local update_volume = function ( stdout, _, _, exitcode )
     if ( exitcode == 0 ) then
         volume_porcent:set_text(stdout)
     end
@@ -437,7 +438,7 @@ local globalkeys = gears.table.join(
     awful.key({}, "XF86AudioRaiseVolume",
         function ()
             awful.spawn.easy_async( "wpctl set-volume @DEFAULT_SINK@ 5%+",
-                function ( stdout, stderr, exitreason, exitcode )
+                function ( _, _, _, exitcode )
                     if (exitcode == 0 ) then
                         awful.spawn.easy_async( "wpctl get-volume @DEFAULT_SINK@" , update_volume )
                     end
@@ -449,7 +450,7 @@ local globalkeys = gears.table.join(
     awful.key({}, "XF86AudioLowerVolume",
         function ()
             awful.spawn.easy_async( "wpctl set-volume @DEFAULT_SINK@ 5%-",
-                function ( stdout, stderr, exitreason, exitcode )
+                function ( _, _, _, exitcode )
                     if (exitcode == 0 ) then
                         awful.spawn.easy_async( "wpctl get-volume @DEFAULT_SINK@" , update_volume )
                     end
@@ -461,7 +462,7 @@ local globalkeys = gears.table.join(
     awful.key({Modkey}, "F3",
         function ()
             awful.spawn.easy_async( "wpctl set-volume @DEFAULT_SINK@ 5%+",
-                function ( stdout, stderr, exitreason, exitcode )
+                function ( _, _, _, exitcode )
                     if (exitcode == 0 ) then
                         awful.spawn.easy_async( "wpctl get-volume @DEFAULT_SINK@" , update_volume )
                     end
@@ -473,7 +474,7 @@ local globalkeys = gears.table.join(
     awful.key({Modkey}, "F2",
         function ()
             awful.spawn.easy_async( "wpctl set-volume @DEFAULT_SINK@ 5%-",
-                function ( stdout, stderr, exitreason, exitcode )
+                function ( _, _, _, exitcode )
                     if (exitcode == 0 ) then
                         awful.spawn.easy_async( "wpctl get-volume @DEFAULT_SINK@" , update_volume )
                     end
