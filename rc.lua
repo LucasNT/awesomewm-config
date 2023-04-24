@@ -44,51 +44,55 @@ do
 end
 -- End Error handling
 
-function create_keys_for_tags(key, tag_pos)
+-- Utils Functions
+local function create_keys_for_tags(key, tag_name)
+    local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
     return gears.table.join(
-    -- View tag only.
-    awful.key( { Modkey }, key,
-    function ()
-        local screen = awful.screen.focused()
-        local tag = screen.tags[tag_pos]
-        if tag then
-            tag:view_only()
-        end
-    end,
-    {description = "View tag " .. key, group = "tag"}),
-    -- Toggle tag display.
-    awful.key({ Modkey, "Control" }, key,
-    function ()
-        local screen = awful.screen.focused()
-        local tag = screen.tags[tag_pos]
-        if tag then
-            awful.tag.viewtoggle(tag)
-        end
-    end,
-    {description = "toggle tag " .. key, group = "tag"}),
-    -- Move client to tag.
-    awful.key({ Modkey, "Shift" }, key,
-    function ()
-        if client.focus then
-            local tag = client.focus.screen.tags[tag_pos]
+        -- View tag only.
+        awful.key( { Modkey }, key,
+        function ()
             if tag then
-                client.focus:move_to_tag(tag)
+                tag:view_only()
             end
-        end
-    end,
-    {description = "move focused client to tag "..key, group = "tag"}),
-    -- Toggle tag on focused client.
-    awful.key({ Modkey, "Control", "Shift" }, key,
-    function ()
-        if client.focus then
-            local tag = client.focus.screen.tags[tag_pos]
+        end,
+        {description = "View tag " .. key, group = "tag"}),
+        -- Toggle tag display.
+        awful.key({ Modkey, "Control" }, key,
+        function ()
             if tag then
-                client.focus:toggle_tag(tag)
+                awful.tag.viewtoggle(tag)
             end
-        end
-    end,
-    {description = "toggle focused client on tag " .. key, group = "tag"})
+        end,
+        {description = "toggle tag " .. key, group = "tag"}),
+        -- Move client to tag.
+        awful.key({ Modkey, "Shift" }, key,
+        function ()
+            if client.focus then
+                if tag then
+                    client.focus:move_to_tag(tag)
+                end
+            end
+        end,
+        {description = "move focused client to tag "..key, group = "tag"}),
+        -- Toggle tag on focused client.
+        awful.key({ Modkey, "Control", "Shift" }, key,
+        function ()
+            if client.focus then
+                if tag then
+                    client.focus:toggle_tag(tag)
+                end
+            end
+        end,
+        {description = "toggle focused client on tag " .. key, group = "tag"})
     )
+end
+
+local create_tags = function (tag_name, s)
+    local t = awful.tag.add(tag_name, {
+        screen = s,
+        layout = awful.layout.layouts[1]
+    })
+    return t
 end
 
 -- theme or wallpaper
@@ -209,7 +213,19 @@ awful.screen.connect_for_each_screen(function(s)
         end
         set_wallpaper(s)
 
-        awful.tag({ "1", "2", "3", "4", "q", "w", "e", "r", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+        create_tags("1", s):view_only()
+        create_tags("2", s)
+        create_tags("3", s)
+        create_tags("4", s)
+        create_tags("5", s)
+        create_tags("6", s)
+        create_tags("7", s)
+        create_tags("8", s)
+        create_tags("9", s)
+        create_tags("q", s)
+        create_tags("w", s)
+        create_tags("e", s)
+        create_tags("r", s)
         s.mylayoutbox = awful.widget.layoutbox(s)
 
         s.mytaglist = awful.widget.taglist {
@@ -250,7 +266,14 @@ awful.screen.connect_for_each_screen(function(s)
     elseif (s.outputs.HDMI1 ~= nil) then
         set_wallpaper(s)
 
-        awful.tag({ "1", "2", "3", "4", "q", "w", "e", "r" }, s, awful.layout.layouts[1])
+        create_tags("1", s):view_only()
+        create_tags("2", s)
+        create_tags("3", s)
+        create_tags("4", s)
+        create_tags("q", s)
+        create_tags("w", s)
+        create_tags("e", s)
+        create_tags("r", s)
         s.mylayoutbox = awful.widget.layoutbox(s)
         s.padding = { bottom=60 }
 
@@ -518,19 +541,19 @@ local globalkeys = gears.table.join(
 -- TagKeybinds
 globalkeys = gears.table.join(
     globalkeys,
-    create_keys_for_tags('1',1),
-    create_keys_for_tags('2',2),
-    create_keys_for_tags('3',3),
-    create_keys_for_tags('4',4),
-    create_keys_for_tags('q',5),
-    create_keys_for_tags('w',6),
-    create_keys_for_tags('e',7),
-    create_keys_for_tags('r',8),
-    create_keys_for_tags('5',9),
-    create_keys_for_tags('6',10),
-    create_keys_for_tags('7',11),
-    create_keys_for_tags('8',12),
-    create_keys_for_tags('9',13)
+    create_keys_for_tags('1',"1"),
+    create_keys_for_tags('2',"2"),
+    create_keys_for_tags('3',"3"),
+    create_keys_for_tags('4',"4"),
+    create_keys_for_tags('5',"5"),
+    create_keys_for_tags('6',"6"),
+    create_keys_for_tags('7',"7"),
+    create_keys_for_tags('8',"8"),
+    create_keys_for_tags('9',"9"),
+    create_keys_for_tags('q',"q"),
+    create_keys_for_tags('w',"w"),
+    create_keys_for_tags('e',"e"),
+    create_keys_for_tags('r',"r")
 )
 
 -- Set keys
