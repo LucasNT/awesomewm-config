@@ -691,8 +691,8 @@ awful.rules.rules = {
             class = "Firefox"
         },
         properties = {
-            screen = 1,
-            tag = "q"
+            tag = "q",
+            switchtotag = true
         }
     },
 }
