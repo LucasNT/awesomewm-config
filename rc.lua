@@ -560,6 +560,10 @@ globalkeys = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
+-- Notifications
+
+naughty.config.defaults.icon_size = 80
+
 -- Rules
 
 local clientbuttons = gears.table.join(
