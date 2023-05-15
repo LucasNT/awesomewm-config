@@ -583,6 +583,10 @@ root.keys(globalkeys)
 -- Notifications
 
 naughty.config.defaults.icon_size = 80
+naughty.config.defaults.width = 600
+
+-- naughty.connect_signal("request::display", function(notification, args)
+-- end)
 
 -- Rules
 
