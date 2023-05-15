@@ -118,6 +118,7 @@ Editor = os.getenv("EDITOR") or "vim"
 Editor_cmd = Terminal .. " -e " .. Editor
 Modkey = "Mod1"
 Music_lenght = 20
+Lock_screen = "lock"
 
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -141,6 +142,19 @@ local taglist_buttons = gears.table.join(
 )
 
 menubar.utils.terminal = Terminal -- Set the Terminal for applications that require it
+
+-- X11 Configs
+awful.spawn.with_shell("xset s on; xset s 60")
+awful.spawn.easy_async_with_shell("xss-lock -- " .. Lock_screen, function( _, _, _, exitcode )
+    if ( exitcode == 127 ) then
+        naughty.notify({
+            preset = naughty.config.presets.critical,
+            title = "Oops, lock screen failed",
+            text = "Need the i3lock and xss-lock"
+        })
+    end
+end)
+--
 
 -- Widget
 
@@ -457,6 +471,12 @@ local globalkeys = gears.table.join(
     ),
 
     -- Group System
+    awful.key({Modkey, "Control", "Shift"}, "l",
+        function ()
+            awful.spawn.with_shell(Lock_screen)
+        end,
+        {description = "Lock Screen", group = "system" }
+    ),
     -- Volume Control
     awful.key({}, "XF86AudioRaiseVolume",
         function ()
