@@ -46,11 +46,11 @@ end
 
 -- Utils Functions
 local function create_keys_for_tags(key, tag_name)
-    local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
     return gears.table.join(
         -- View tag only.
         awful.key( { Modkey }, key,
         function ()
+            local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
             if tag then
                 tag:view_only()
             end
@@ -59,6 +59,7 @@ local function create_keys_for_tags(key, tag_name)
         -- Toggle tag display.
         awful.key({ Modkey, "Control" }, key,
         function ()
+            local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
             if tag then
                 awful.tag.viewtoggle(tag)
             end
@@ -67,6 +68,7 @@ local function create_keys_for_tags(key, tag_name)
         -- Move client to tag.
         awful.key({ Modkey, "Shift" }, key,
         function ()
+            local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
             if client.focus then
                 if tag then
                     client.focus:move_to_tag(tag)
@@ -77,6 +79,7 @@ local function create_keys_for_tags(key, tag_name)
         -- Toggle tag on focused client.
         awful.key({ Modkey, "Control", "Shift" }, key,
         function ()
+            local tag = awful.tag.find_by_name(awful.screen.focused(), tag_name)
             if client.focus then
                 if tag then
                     client.focus:toggle_tag(tag)
