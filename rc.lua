@@ -147,7 +147,7 @@ local taglist_buttons = gears.table.join(
 menubar.utils.terminal = Terminal -- Set the Terminal for applications that require it
 
 -- X11 Configs
-awful.spawn.with_shell("xset s on; xset s 60")
+awful.spawn.with_shell("xset s on; xset s 600")
 awful.spawn.easy_async_with_shell("xss-lock -- " .. Lock_screen, function( _, _, _, exitcode )
     if ( exitcode == 127 ) then
         naughty.notify({
