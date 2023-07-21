@@ -123,6 +123,10 @@ Modkey = "Mod1"
 Music_lenght = 20
 Lock_screen = "lock"
 
+for _, preset in pairs(naughty.config.presets) do
+    preset.position = "top_left"
+end
+
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.top,
