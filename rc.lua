@@ -415,6 +415,12 @@ local globalkeys = gears.table.join(
         end,
         {description = "open a Terminal", group = "launcher"}
     ),
+    awful.key({ Modkey,"Shift"    }, "Return",
+        function ()
+            awful.spawn("urxvt")
+        end,
+        {description = "open Urxvt", group = "launcher"}
+    ),
     -- Prompt
     awful.key({ Modkey }, "d",
         function ()
