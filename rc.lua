@@ -188,6 +188,10 @@ local battery_widget = awful.widget.watch("cat /sys/class/power_supply/BAT0/ueve
     end
     local capacity =  tonumber(data["POWER_SUPPLY_ENERGY_NOW"])
     / tonumber(data["POWER_SUPPLY_ENERGY_FULL_DESIGN"]) * 100
+
+    if ( is_charging == "-" and capacity < 15 ) then
+        awful.spawn.easy_async("notify-send -u critical -i dialog-error 'bateria está baixa' 'coloca para carregar pela amor de deus'", nil)
+    end
     widget:set_text(string.format("%s%.1f%% %d %s", is_charging, capacity, data["POWER_SUPPLY_CYCLE_COUNT"], remaining_time ))
 end)
 
