@@ -806,3 +806,9 @@ function unminimize_func()
         c.minimized = false
     end
 end
+
+function unmaximize_func()
+    for _, c in ipairs(mouse.screen.selected_tag:clients()) do
+        c.maximized = false
+    end
+end
