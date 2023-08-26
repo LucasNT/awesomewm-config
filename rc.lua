@@ -14,6 +14,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local music_widget = require("widgets.music_player")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -192,10 +193,6 @@ end)
 
 local volume_porcent = wibox.widget.textbox("", true)
 
-local music_playing = awful.widget.watch("playerctl metadata title", 1, function(widget, stdout)
-    widget:set_text( " | " .. stdout:sub(1,Music_lenght))
-end)
-
 -- function ( stdout, stderr, exitreason, exitcode )
 local update_volume = function ( stdout, _, _, exitcode )
     if ( exitcode == 0 ) then
@@ -222,13 +219,16 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
 
+    local music_lenght = 100
     s.mypromptbox = awful.widget.prompt()
     if ( s.outputs.eDP1 ~= nil ) then
         local output_screen = s.outputs.eDP1
-        if ( output_screen.nm_width == 390 and output_screen.nm_heigth == 190  ) then
-            Music_lenght = 60
+
+        if ( output_screen.mm_width == 290 and output_screen.mm_height == 160  ) then
+            music_lenght = 40
         end
         set_wallpaper(s)
+        local music_playing = music_widget.new_music_widget(music_lenght)
 
         create_tags("1", s):view_only()
         create_tags("2", s)
@@ -282,6 +282,8 @@ awful.screen.connect_for_each_screen(function(s)
         }
     elseif (s.outputs.HDMI1 ~= nil) then
         set_wallpaper(s)
+
+        local music_playing = music_widget.new_music_widget(music_lenght)
 
         create_tags("1", s):view_only()
         create_tags("2", s)
