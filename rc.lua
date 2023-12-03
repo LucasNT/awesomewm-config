@@ -103,6 +103,8 @@ end
 
 beautiful.init("/home/lucas/.config/awesome/zenburn/theme.lua")
 
+awful.spawn.with_shell("gsettings set org.gnome.desktop.interface color-scheme \"prefer-dark\"")
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -769,7 +771,7 @@ end)
             --             awful.mouse.client.resize(c)
             --         end)
             --     )
-            -- 
+            --
             --     awful.titlebar(c) : setup {
                 --         { -- Left
                 --             awful.titlebar.widget.iconwidget(c),
